@@ -9,7 +9,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 from utils.helpers import take_screenshot
 
 
@@ -62,7 +61,7 @@ def test_add_em(login_as_admin):
         toast = wait.until(EC.visibility_of_element_located((By.XPATH, "//*[contains(.,'Successfully')]")))
         assert toast.is_displayed(), "employee not added successfully"
     except Exception as e:
-        take_screenshot(driver, "error.png")
+        utils(driver, "error.png")
         allure.attach.file(f"screenshot/error_emp.png", name="failure screenshot")
         attachment_type = allure.attachment_type.PNG
         raise e
