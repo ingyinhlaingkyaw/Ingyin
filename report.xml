@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="15" time="82.983" timestamp="2025-06-24T15:56:26.582065+06:30" hostname="HUAB86A4Z"><testcase classname="test_order" name="test_order_1" time="0.001" /><testcase classname="test_order" name="test_order_3" time="0.001" /><testcase classname="test_order" name="test_order_2" time="0.000" /><testcase classname="marker_test" name="test_critical_function_1" time="0.001" /><testcase classname="marker_test" name="test_critical_function_2" time="0.000" /><testcase classname="marker_test" name="test_critical_function_3" time="0.000" /><testcase classname="marker_test" name="test_normal_function_1" time="0.001" /><testcase classname="marker_test" name="test_normal_function_2" time="0.002" /><testcase classname="marker_test" name="test_unimportant_function" time="0.000" /><testcase classname="test_login" name="test_valid_login[Admin-admin123-True]" time="10.007" /><testcase classname="test_login" name="test_valid_login[Admin-admin-False]" time="10.964" /><testcase classname="test_login" name="test_valid_login[ingyin-admin123-False]" time="10.940" /><testcase classname="test_login" name="test_valid_login[aaa-aaa-False]" time="18.155" /><testcase classname="test_login" name="test_required_field" time="4.626" /><testcase classname="test_login" name="test_logout" time="28.098"><failure message="selenium.common.exceptions.TimeoutException: Message: &#10;Stacktrace:&#10;&#09;GetHandleVerifier [0x0x7ff658a5fea5+79173]&#10;&#09;GetHandleVerifier [0x0x7ff658a5ff00+79264]&#10;&#09;(No symbol) [0x0x7ff658819e5a]&#10;&#09;(No symbol) [0x0x7ff658870586]&#10;&#09;(No symbol) [0x0x7ff65887083c]&#10;&#09;(No symbol) [0x0x7ff6588c4247]&#10;&#09;(No symbol) [0x0x7ff6588989af]&#10;&#09;(No symbol) [0x0x7ff6588c100d]&#10;&#09;(No symbol) [0x0x7ff658898743]&#10;&#09;(No symbol) [0x0x7ff6588614c1]&#10;&#09;(No symbol) [0x0x7ff658862253]&#10;&#09;GetHandleVerifier [0x0x7ff658d2a2dd+3004797]&#10;&#09;GetHandleVerifier [0x0x7ff658d2472d+2981325]&#10;&#09;GetHandleVerifier [0x0x7ff658d43380+3107360]&#10;&#09;GetHandleVerifier [0x0x7ff658a7aa2e+188622]&#10;&#09;GetHandleVerifier [0x0x7ff658a822bf+219487]&#10;&#09;GetHandleVerifier [0x0x7ff658a68df4+115860]&#10;&#09;GetHandleVerifier [0x0x7ff658a68fa9+116297]&#10;&#09;GetHandleVerifier [0x0x7ff658a4f558+11256]&#10;&#09;BaseThreadInitThunk [0x0x7fff2d57e8d7+23]&#10;&#09;RtlUserThreadStart [0x0x7fff2f81c5dc+44]">login_as_admin = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="495597c927a7e267fc9ba1b858e0e87d")&gt;
+
+    def test_logout(login_as_admin):
+        driver = login_as_admin
+        wait = WebDriverWait(driver, 20)
+&gt;       user_icon = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "oxd-user dropdown-tab")))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_login.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.support.wait.WebDriverWait (session="495597c927a7e267fc9ba1b858e0e87d")&gt;
+method = &lt;function element_to_be_clickable.&lt;locals&gt;._predicate at 0x000002D8D72A5760&gt;
+message = ''
+
+    def until(self, method: Callable[[D], Union[Literal[False], T]], message: str = "") -&gt; T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Parameters:
+        -----------
+        method: callable(WebDriver)
+            - A callable object that takes a WebDriver instance as an argument.
+    
+        message: str
+            - Optional message for :exc:`TimeoutException`
+    
+        Return:
+        -------
+        object: T
+            - The result of the last call to `method`
+    
+        Raises:
+        -------
+        TimeoutException
+            - If 'method' does not return a truthy value within the WebDriverWait
+            object's timeout
+    
+        Example:
+        --------
+        &gt;&gt;&gt; from selenium.webdriver.common.by import By
+        &gt;&gt;&gt; from selenium.webdriver.support.ui import WebDriverWait
+        &gt;&gt;&gt; from selenium.webdriver.support import expected_conditions as EC
+    
+        # Wait until an element is visible on the page
+        &gt;&gt;&gt; wait = WebDriverWait(driver, 10)
+        &gt;&gt;&gt; element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+        &gt;&gt;&gt; print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() &gt; end_time:
+                break
+            time.sleep(self._poll)
+&gt;       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       	GetHandleVerifier [0x0x7ff658a5fea5+79173]
+E       	GetHandleVerifier [0x0x7ff658a5ff00+79264]
+E       	(No symbol) [0x0x7ff658819e5a]
+E       	(No symbol) [0x0x7ff658870586]
+E       	(No symbol) [0x0x7ff65887083c]
+E       	(No symbol) [0x0x7ff6588c4247]
+E       	(No symbol) [0x0x7ff6588989af]
+E       	(No symbol) [0x0x7ff6588c100d]
+E       	(No symbol) [0x0x7ff658898743]
+E       	(No symbol) [0x0x7ff6588614c1]
+E       	(No symbol) [0x0x7ff658862253]
+E       	GetHandleVerifier [0x0x7ff658d2a2dd+3004797]
+E       	GetHandleVerifier [0x0x7ff658d2472d+2981325]
+E       	GetHandleVerifier [0x0x7ff658d43380+3107360]
+E       	GetHandleVerifier [0x0x7ff658a7aa2e+188622]
+E       	GetHandleVerifier [0x0x7ff658a822bf+219487]
+E       	GetHandleVerifier [0x0x7ff658a68df4+115860]
+E       	GetHandleVerifier [0x0x7ff658a68fa9+116297]
+E       	GetHandleVerifier [0x0x7ff658a4f558+11256]
+E       	BaseThreadInitThunk [0x0x7fff2d57e8d7+23]
+E       	RtlUserThreadStart [0x0x7fff2f81c5dc+44]
+
+.venv\Lib\site-packages\selenium\webdriver\support\wait.py:138: TimeoutException</failure></testcase></testsuite></testsuites>
